@@ -1,0 +1,68 @@
+Distinct Character Substring
+You are given a string s
+
+Your task is to find the number of possible substrings (not necessarily distinct) that consists of distinct characters only.
+
+Input Format
+First and Only line of input contains a string s.
+
+Output Format
+Print an integer representing the count.
+
+Example 1
+Input
+
+gffg
+Output
+
+6
+Explanation
+
+All possible substrings from the given string are, 
+( “g“, “gf“, “gff”, “gffg”, “f“, “ff”, “ffg”, “f“, “fg“, “g” ) 
+Among them, the highlighted ones consists of distinct characters only.
+Example 2
+Input
+
+acciojob
+Output
+
+18
+Constraints
+1<=|s|<=10^5
+
+Topics
+2-Pointers
+Strings
+
+
+import java.util.*;
+
+public class Main {
+
+    public static long DistinctCharacterSubstring(String s) {
+        int n = s.length();
+        Set<Character> uniqueChars = new HashSet<>();
+        int left = 0;
+        long count = 0;
+
+        for (int right = 0; right < n; right++) {
+            while (uniqueChars.contains(s.charAt(right))) {
+                uniqueChars.remove(s.charAt(left));
+                left++;
+            }
+            uniqueChars.add(s.charAt(right));
+            count += right - left + 1;
+        }
+
+        return count;
+    }
+
+    public static void main(String[] args) throws Throwable {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+        long ans = DistinctCharacterSubstring(s);
+        System.out.println(ans);
+    }
+}
+
