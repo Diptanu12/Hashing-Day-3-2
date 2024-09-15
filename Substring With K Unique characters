@@ -1,0 +1,129 @@
+Substring With K Unique characters
+You are given a string 's'.
+
+You need to print length of longest possible substring that has exactly k unique characters. If there is no such string print -1.
+
+Input Format
+First line contains two integers n and k, denoting the length of string and value of k respectively.
+
+Second line contains a string s.
+
+Output Format
+Print an integer indicating the length of substring. If not possible print -1.
+
+Example 1
+Input
+
+6 1
+aabbcc
+Output
+
+2
+Explanation
+
+Max substring can be any one from {“aa” , “bb” , “cc”}.
+Example 2
+Input
+
+6 2
+aabbcc
+Output
+
+4
+Explanation
+
+Max substring can be any one from {“aabb” , “bbcc”}
+Constraints
+1<=|s|<=10^5
+1<=k<=10^5
+
+Topics
+2-Pointers
+Hashing
+StringsSubstring With K Unique characters
+You are given a string 's'.
+
+You need to print length of longest possible substring that has exactly k unique characters. If there is no such string print -1.
+
+Input Format
+First line contains two integers n and k, denoting the length of string and value of k respectively.
+
+Second line contains a string s.
+
+Output Format
+Print an integer indicating the length of substring. If not possible print -1.
+
+Example 1
+Input
+
+6 1
+aabbcc
+Output
+
+2
+Explanation
+
+Max substring can be any one from {“aa” , “bb” , “cc”}.
+Example 2
+Input
+
+6 2
+aabbcc
+Output
+
+4
+Explanation
+
+Max substring can be any one from {“aabb” , “bbcc”}
+Constraints
+1<=|s|<=10^5
+1<=k<=10^5
+
+Topics
+2-Pointers
+Hashing
+Strings
+
+
+
+import java.util.*;
+
+public class Main {
+
+    public static int longestkSubstr(int n, int k, String s) {
+        if (k > n) return -1;
+
+        int maxLength = -1;
+        int left = 0;
+        Map<Character, Integer> charFrequencyMap = new HashMap<>();
+
+        for (int right = 0; right < n; right++) {
+            char rightChar = s.charAt(right);
+            charFrequencyMap.put(rightChar, charFrequencyMap.getOrDefault(rightChar, 0) + 1);
+
+            while (charFrequencyMap.size() > k) {
+                char leftChar = s.charAt(left);
+                charFrequencyMap.put(leftChar, charFrequencyMap.get(leftChar) - 1);
+                if (charFrequencyMap.get(leftChar) == 0) {
+                    charFrequencyMap.remove(leftChar);
+                }
+                left++;
+            }
+
+            if (charFrequencyMap.size() == k) {
+                maxLength = Math.max(maxLength, right - left + 1);
+            }
+        }
+
+        return maxLength;
+    }
+
+    public static void main(String[] args) throws Throwable {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int k = sc.nextInt();
+        String s = sc.next();
+        int ans = longestkSubstr(n, k, s);
+        System.out.println(ans);
+    }
+}
